@@ -13,9 +13,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1 # Allow 1 extra pod during update
-      maxUnavailable: 0 # Zero downtime — never kill before new is ready
-  template:
+      maxSurge: 1
+      maxUnavailable: 0
     metadata:
       labels:
         app: portfolio
@@ -27,22 +26,6 @@ spec:
           ports:
             - containerPort: 5000
               name: http
-
-          # ── Environment Variables ──
-          env:
-            - name: FLASK_DEBUG
-              value: "false"
-            - name: PORT
-              value: "5000"
-            - name: PORTFOLIO_NAME
-              value: "Pranav Kotawar"
-            - name: PORTFOLIO_TITLE
-              value: "Junior DevOps Engineer"
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: portfolio-secret
-                  key: secret-key
           resources:
             requests:
               memory: "128Mi"

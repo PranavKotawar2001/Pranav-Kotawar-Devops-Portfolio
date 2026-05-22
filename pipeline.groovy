@@ -7,6 +7,11 @@ pipeline{
                 url: 'https://github.com/PranavKotawar2001/Pranav-Kotawar-Devops-Portfolio.git'
             }
         }
+        stage('test'){
+            steps{
+                sh 'echo "Testing the code"'
+            }
+        }
 
         // stage('Test') {
         //     steps {

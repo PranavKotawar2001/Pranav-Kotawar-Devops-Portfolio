@@ -1,35 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: portfolio-deployment
   namespace: default
+
   labels:
     app: portfolio
+
 spec:
   replicas: 2
+
   selector:
     matchLabels:
       app: portfolio
+
   strategy:
     type: RollingUpdate
+
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+
+  template:
     metadata:
       labels:
         app: portfolio
+
     spec:
       containers:
         - name: portfolio
           image: pranavkotawar2001/pranav-potfolio:latest
+
           imagePullPolicy: Always
+
           ports:
             - containerPort: 5000
               name: http
+
           resources:
             requests:
               memory: "128Mi"
               cpu: "100m"
+
             limits:
               memory: "256Mi"
               cpu: "300m"

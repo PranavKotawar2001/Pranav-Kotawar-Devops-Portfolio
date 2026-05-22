@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: portfolio
-          image: pranavkotawar/portfolio:latest # Replace with your DockerHub/ECR image
+          image: pranavsudhirkotawar/portfolio:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -43,8 +43,6 @@ spec:
                 secretKeyRef:
                   name: portfolio-secret
                   key: secret-key
-
-          # ── Resource Limits ──
           resources:
             requests:
               memory: "128Mi"
@@ -52,6 +50,3 @@ spec:
             limits:
               memory: "256Mi"
               cpu: "300m"
-
-      # ── Restart Policy ──
-      restartPolicy: Always

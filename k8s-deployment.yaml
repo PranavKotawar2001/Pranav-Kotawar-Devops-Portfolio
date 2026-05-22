@@ -5,8 +5,6 @@ metadata:
   namespace: default
   labels:
     app: portfolio
-    owner: pranav-kotawar
-    version: "1.0.0"
 spec:
   replicas: 2
   selector:
@@ -15,23 +13,16 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 1           # Allow 1 extra pod during update
-      maxUnavailable: 0     # Zero downtime — never kill before new is ready
+      maxSurge: 1 # Allow 1 extra pod during update
+      maxUnavailable: 0 # Zero downtime — never kill before new is ready
   template:
     metadata:
       labels:
         app: portfolio
-        version: "1.0.0"
     spec:
-      # ── Security Context (non-root) ──
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        fsGroup: 1000
-
       containers:
         - name: portfolio
-          image: pranavkotawar/portfolio:latest   # Replace with your DockerHub/ECR image
+          image: pranavkotawar/portfolio:latest # Replace with your DockerHub/ECR image
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -62,26 +53,5 @@ spec:
               memory: "256Mi"
               cpu: "300m"
 
-          # ── Liveness Probe ──
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5000
-            initialDelaySeconds: 15
-            periodSeconds: 20
-            failureThreshold: 3
-
-          # ── Readiness Probe ──
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 5000
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            failureThreshold: 3
-
       # ── Restart Policy ──
       restartPolicy: Always
-
-      # ── Graceful Shutdown ──
-      terminationGracePeriodSeconds: 30

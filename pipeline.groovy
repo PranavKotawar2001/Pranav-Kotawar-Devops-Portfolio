@@ -23,15 +23,15 @@ pipeline{
 
          stage('Docker-Image-Build'){
             steps{
-                sh '''docker build -t pranavkotawar2001/pranav-potfolio:tagname .'''   
+                sh '''docker build -t pranavkotawar2001/pranav-potfolio:latest .'''   
             }
         }
 
         stage('Push-Image-to-Docker-Hub'){
             steps{
                 sh '''
-                   docker push pranavkotawar2001/pranav-potfolio:tagname
-                   docker rmi pranavkotawar2001/pranav-potfolio:tagname''' 
+                   docker push pranavkotawar2001/pranav-potfolio:latest
+                   docker rmi pranavkotawar2001/pranav-potfolio:latest''' 
             }
         }
          

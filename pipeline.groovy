@@ -7,24 +7,18 @@ pipeline{
                 url: 'https://github.com/PranavKotawar2001/Pranav-Kotawar-Devops-Portfolio.git'
             }
         }
-        stage('test'){
-            steps{
-                sh 'echo "Testing the code"'
+        stage('Test') {
+            steps {
+                withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'Sonar-secret') {
+                    sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=python-app \
+                        -Dsonar.sources=. \
+                        -Dsonar.python.version=3
+                    '''
+                }
             }
         }
-
-        // stage('Test') {
-        //     steps {
-        //         withSonarQubeEnv(installationName: 'Sonar', credentialsId: 'Sonar-secret') {
-        //             sh '''
-        //                 sonar-scanner \
-        //                 -Dsonar.projectKey=python-app \
-        //                 -Dsonar.sources=. \
-        //                 -Dsonar.python.version=3
-        //             '''
-        //         }
-        //     }
-        // }
 
          stage('Docker-Image-Build'){
             steps{

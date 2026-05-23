@@ -47,7 +47,7 @@ Grafana Dashboard
 # 📂 Project Structure
 
 ASSIGNMENT/
-│
+|
 ├── kubernetes/
 │ ├── HPA.yaml
 │ ├── k8s-deployment.yaml

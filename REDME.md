@@ -46,23 +46,28 @@ Grafana Dashboard
 
 # 📂 Project Structure
 
+```bash
 ASSIGNMENT/
 │
 ├── kubernetes/
-│ ├── HPA.yaml
-│ ├── k8s-deployment.yaml
-│ └── k8s-service.yaml
+│   ├── HPA.yaml
+│   ├── k8s-deployment.yaml
+│   └── k8s-service.yaml
 │
 ├── static/
-│ └── images/
-│ ├── pk.png
-│ ├── project1.png
-│ ├── project2.png
-│ ├── project3.png
-│ └── ...
+│   └── images/
+│       ├── pk.png
+│       ├── project1.png
+│       ├── project2.png
+│       ├── project3.png
+│       ├── website.png
+│       ├── security_group.png
+│       ├── jenkins.png
+│       ├── promethius.png
+│       └── graphana.png
 │
 ├── templates/
-│ └── index.html
+│   └── index.html
 │
 ├── .env
 ├── app.py
@@ -70,6 +75,7 @@ ASSIGNMENT/
 ├── pipeline.groovy
 ├── README.md
 └── requirements.txt
+```
 
 ---
 
@@ -110,27 +116,34 @@ Create an Ubuntu EC2 instance with the following configuration:
 
 Allow the following inbound traffic:
 
-| Port  | Purpose                     |
-| ----- | --------------------------- |
-| 22    | SSH Access                  |
-| 80    | HTTP                        |
-| 443   | HTTPS                       |
-| 3000  | Grafana                     |
-| 8080  | Jenkins                     |
-| 9090  | Prometheus                  |
-| 5000  | Application Service         |
-| 30921 | Kubernetes NodePort Service |
+| Port  | Purpose             |
+| ----- | ------------------- |
+| 22    | SSH Access          |
+| 80    | HTTP                |
+| 443   | HTTPS               |
+| 3000  | Grafana             |
+| 5000  | Flask Application   |
+| 8080  | Jenkins             |
+| 9090  | Prometheus          |
+| 30921 | Kubernetes NodePort |
 
 ---
 
-# 🛠️ Step 1: Install Java
+# 🛠️ Step 1:- Update Ubuntu Packages
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+---
+
+# ☕ Step 2:- Install Java
 
 Jenkins requires Java to run.
 
 ## Install Java
 
 ```bash
-sudo apt update
 sudo apt install fontconfig openjdk-21-jre -y
 ```
 
@@ -142,7 +155,7 @@ java --version
 
 ---
 
-# 🛠️ Step 2: Install Jenkins
+# 🛠️ Step 3:- Install Jenkins
 
 ## Add Jenkins Repository
 
@@ -184,9 +197,9 @@ sudo systemctl status jenkins
 
 ---
 
-# 🌐 Access Jenkins Dashboard
+# 🌐 Step 4:- Access Jenkins Dashboard
 
-Open your browser:
+Open browser:
 
 ```text
 http://<EC2-PUBLIC-IP>:8080
@@ -198,13 +211,14 @@ http://<EC2-PUBLIC-IP>:8080
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 
-Copy the password and paste it into Jenkins.
-
-Install suggested plugins and create your Jenkins admin user.
+- Copy password
+- Paste into Jenkins UI
+- Install suggested plugins
+- Create Jenkins admin user
 
 ---
 
-# 🐳 Step 3: Install Docker
+# 🐳 Step 5:- Install Docker
 
 ## Install Docker
 
@@ -250,9 +264,7 @@ docker --version
 
 ---
 
-# 🔐 Step 4: DockerHub Login
-
-Login to DockerHub from the terminal.
+# 🔐 Step 6:- Login to DockerHub
 
 ```bash
 docker login
@@ -265,9 +277,7 @@ Enter:
 
 ---
 
-# ☁️ Step 5: Install AWS CLI
-
-AWS CLI is required to manage AWS resources and connect Jenkins with EKS.
+# ☁️ Step 7:- Install AWS CLI
 
 ## Download AWS CLI
 
@@ -293,7 +303,7 @@ unzip awscliv2.zip
 sudo ./aws/install
 ```
 
-## Verify Installation
+## Verify AWS CLI
 
 ```bash
 aws --version
@@ -301,9 +311,7 @@ aws --version
 
 ---
 
-# 🔑 Step 6: Configure AWS CLI
-
-Configure AWS credentials.
+# 🔑 Step 8:- Configure AWS CLI
 
 ```bash
 aws configure
@@ -313,14 +321,12 @@ Provide:
 
 - AWS Access Key
 - AWS Secret Key
-- Region name
-- Output format
+- Region Name
+- Output Format
 
 ---
 
-# 📁 Step 7: Give Jenkins Access to AWS Credentials
-
-Copy AWS credentials to Jenkins.
+# 📁 Step 9:- Give Jenkins Access to AWS Credentials
 
 ```bash
 cp -rv .aws/ /var/lib/jenkins/
@@ -332,9 +338,7 @@ sudo chown -R jenkins /var/lib/jenkins/.aws/
 
 ---
 
-# ☸️ Step 8: Install kubectl
-
-kubectl is required to manage Kubernetes resources.
+# ☸️ Step 10:- Install kubectl
 
 ## Download kubectl
 
@@ -348,7 +352,7 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
 
-## Verify Installation
+## Verify kubectl
 
 ```bash
 kubectl version --client
@@ -356,9 +360,7 @@ kubectl version --client
 
 ---
 
-# ☁️ Step 9: Connect EC2 with EKS Cluster
-
-Update kubeconfig file.
+# ☁️ Step 11:- Connect EC2 to EKS Cluster
 
 ```bash
 aws eks update-kubeconfig --name <cluster-name> --region <region>
@@ -370,7 +372,7 @@ Example:
 aws eks update-kubeconfig --name portfolio-cluster --region ap-south-1
 ```
 
-## Verify Cluster Connection
+## Verify Connection
 
 ```bash
 kubectl get nodes
@@ -378,9 +380,7 @@ kubectl get nodes
 
 ---
 
-# 📁 Step 10: Give Jenkins Access to Kubernetes Cluster
-
-Copy kubeconfig file to Jenkins.
+# 📁 Step 12:- Give Jenkins Access to Kubernetes Cluster
 
 ```bash
 sudo cp -rv .kube/ /var/lib/jenkins/
@@ -392,9 +392,7 @@ sudo chown -R jenkins /var/lib/jenkins/.kube/
 
 ---
 
-# ⛵ Step 11: Install Helm
-
-Helm is used to install Kubernetes applications.
+# ⛵ Step 13:- Install Helm
 
 ## Install Helm
 
@@ -410,7 +408,7 @@ sudo chmod 700 get_helm.sh
 ./get_helm.sh
 ```
 
-## Verify Helm Installation
+## Verify Helm
 
 ```bash
 helm version
@@ -418,9 +416,9 @@ helm version
 
 ---
 
-# 📊 Step 12: Install Prometheus and Grafana
+# 📊 Step 14:- Install Prometheus and Grafana
 
-## Add Helm Repositories
+## Add Helm Repository
 
 ```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -430,23 +428,19 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo add stable https://charts.helm.sh/stable
 ```
 
-## Update Helm Repository
+## Update Helm Repo
 
 ```bash
 helm repo update
 ```
 
----
-
-# 📁 Create Monitoring Namespace
+## Create Monitoring Namespace
 
 ```bash
 kubectl create namespace monitoring
 ```
 
----
-
-# 🚀 Install kube-prometheus-stack
+## Install kube-prometheus-stack
 
 ```bash
 helm install kind-prometheus prometheus-community/kube-prometheus-stack \
@@ -463,7 +457,7 @@ helm install kind-prometheus prometheus-community/kube-prometheus-stack \
 
 ---
 
-# 🔍 Verify Monitoring Stack
+# 🔍 Step 15:- Verify Monitoring Stack
 
 ```bash
 kubectl get svc -n monitoring
@@ -475,7 +469,7 @@ kubectl get namespace
 
 ---
 
-# 🌐 Access Prometheus and Grafana
+# 🌐 Step 16:- Access Prometheus and Grafana
 
 ## Port Forward Prometheus
 
@@ -521,17 +515,15 @@ sum(rate(container_network_transmit_bytes_total{namespace="default"}[5m])) by (p
 
 ---
 
-# 📊 Step 13: Login to Grafana
+# 📊 Step 17:- Login to Grafana
 
-## Access Grafana
-
-Open browser:
+## Open Grafana
 
 ```text
 http://<PUBLIC-IP>:3000
 ```
 
-## Default Username
+## Username
 
 ```text
 admin
@@ -555,11 +547,9 @@ Run:
 kubectl get secret -n monitoring kind-prometheus-grafana -o jsonpath="{.data.admin-password}" | base64 --decode
 ```
 
-The decoded value will be your Grafana password.
-
 ---
 
-# 🐍 Step 14: Create Python Portfolio Application
+# 🐍 Step 18:- Python Application Dependencies
 
 ## requirements.txt
 
@@ -573,7 +563,31 @@ gunicorn==22.0.0
 
 ---
 
-# 🐳 Step 15: Create Multi-Stage Dockerfile
+# 🚀 Step 19:- Run Flask Application Locally
+
+## Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## Run Flask Application
+
+```bash
+python app.py
+```
+
+Application runs on:
+
+```text
+http://localhost:5000
+```
+
+---
+
+# 🐳 Step 20:- Multi-Stage Dockerfile
+
+## Dockerfile
 
 ```dockerfile
 FROM python:3.11-slim AS builder
@@ -615,9 +629,47 @@ CMD ["python", "-m", "gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "--
 
 ---
 
-# ☸️ Step 16: Kubernetes Deployment File
+# 🐳 Step 21:- Build Docker Image
 
-## deployment.yaml
+```bash
+docker build -t pranavkotawar2001/pranav-potfolio:latest .
+```
+
+## Verify Docker Image
+
+```bash
+docker images
+```
+
+---
+
+# 🚀 Step 22:- Run Docker Container
+
+```bash
+docker run -d -p 5000:5000 pranavkotawar2001/pranav-potfolio:latest
+```
+
+## Verify Running Containers
+
+```bash
+docker ps
+```
+
+---
+
+# 📦 Step 23:- Push Docker Image to DockerHub
+
+## Push Image
+
+```bash
+docker push pranavkotawar2001/pranav-potfolio:latest
+```
+
+---
+
+# ☸️ Step 24:- Kubernetes Deployment File
+
+## k8s-deployment.yaml
 
 ```yaml
 apiVersion: apps/v1
@@ -652,6 +704,7 @@ spec:
     spec:
       containers:
         - name: portfolio
+
           image: pranavkotawar2001/pranav-potfolio:latest
 
           imagePullPolicy: Always
@@ -672,9 +725,9 @@ spec:
 
 ---
 
-# 🌐 Step 17: Kubernetes Service File
+# 🌐 Step 25:- Kubernetes Service File
 
-## service.yaml
+## k8s-service.yaml
 
 ```yaml
 apiVersion: v1
@@ -684,9 +737,6 @@ metadata:
   name: portfolio-service
   namespace: default
 
-  labels:
-    app: portfolio
-
 spec:
   type: LoadBalancer
 
@@ -694,17 +744,16 @@ spec:
     app: portfolio
 
   ports:
-    - name: http
-      protocol: TCP
+    - protocol: TCP
       port: 80
       targetPort: 5000
 ```
 
 ---
 
-# 📈 Step 18: Horizontal Pod Autoscaler
+# 📈 Step 26:- Horizontal Pod Autoscaler
 
-## hpa.yaml
+## HPA.yaml
 
 ```yaml
 apiVersion: autoscaling/v2
@@ -741,9 +790,59 @@ spec:
 
 ---
 
-# 🔄 Step 19: Jenkins Pipeline Configuration
+# ☸️ Step 27:- Apply Kubernetes Files
 
-## Jenkinsfile
+## Apply Deployment
+
+```bash
+kubectl apply -f kubernetes/k8s-deployment.yaml
+```
+
+## Apply Service
+
+```bash
+kubectl apply -f kubernetes/k8s-service.yaml
+```
+
+## Apply HPA
+
+```bash
+kubectl apply -f kubernetes/HPA.yaml
+```
+
+---
+
+# 🔍 Step 28:- Verify Kubernetes Resources
+
+## Check Pods
+
+```bash
+kubectl get pods
+```
+
+## Check Services
+
+```bash
+kubectl get svc
+```
+
+## Check Deployments
+
+```bash
+kubectl get deployments
+```
+
+## Check HPA
+
+```bash
+kubectl get hpa
+```
+
+---
+
+# 🔄 Step 29:- Jenkins Pipeline Configuration
+
+## pipeline.groovy
 
 ```groovy
 pipeline{
@@ -779,9 +878,7 @@ pipeline{
 
         stage('Deploy'){
             steps{
-                sh 'kubectl apply -f deployment.yaml'
-                sh 'kubectl apply -f service.yaml'
-                sh 'kubectl apply -f hpa.yaml'
+                sh 'kubectl apply -f kubernetes/'
             }
         }
     }
@@ -790,9 +887,9 @@ pipeline{
 
 ---
 
-# 🚀 Step 20: Create Jenkins Pipeline Job
+# 🚀 Step 30:- Create Jenkins Pipeline Job
 
-## Open Jenkins Dashboard
+## Open Jenkins
 
 ```text
 http://<PUBLIC-IP>:8080
@@ -801,67 +898,36 @@ http://<PUBLIC-IP>:8080
 ## Steps
 
 1. Click New Item
-2. Enter Pipeline Name
+2. Enter Job Name
 3. Select Pipeline
 4. Click OK
-5. Scroll to Pipeline Section
-6. Select Pipeline Script from SCM
-7. Select Git
-8. Paste GitHub Repository URL
-9. Save Pipeline
-10. Click Build Now
+5. Select Pipeline Script from SCM
+6. Select Git
+7. Paste GitHub Repository URL
+8. Save Job
+9. Click Build Now
 
 ---
 
-# ☸️ Step 21: Verify Kubernetes Deployment
+# 🌐 Step 31:- Access Portfolio Website
 
-## Check Pods
-
-```bash
-kubectl get pods
-```
-
-## Check Services
+## Get LoadBalancer URL
 
 ```bash
 kubectl get svc
 ```
 
-## Check Deployments
-
-```bash
-kubectl get deployments
-```
-
-## Check HPA
-
-```bash
-kubectl get hpa
-```
-
----
-
-# 🌐 Step 22: Access Portfolio Website
-
-Get LoadBalancer URL:
-
-```bash
-kubectl get svc
-```
-
-Open the EXTERNAL-IP in your browser.
+Copy the EXTERNAL-IP and open it in browser.
 
 ---
 
 # 📷 Portfolio Website Screenshot
 
-<img width="100%" alt="Portfolio Website" src="my website 1.png">
+<img width="100%" alt="Portfolio Website" src="static/images/website.png">
 
 ---
 
 # 📊 Monitoring Features
-
-The monitoring stack provides:
 
 - CPU Usage Monitoring
 - Memory Usage Monitoring
@@ -882,7 +948,6 @@ The monitoring stack provides:
 - Pods
 - Horizontal Pod Autoscaler
 - Monitoring Stack
-- NodePort Services
 - LoadBalancer Service
 
 ---

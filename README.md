@@ -990,6 +990,12 @@ The implementation reflects production-oriented deployment practices using moder
 
 ---
 
+# 📷 Grafana Dashboard Screenshot
+
+<img width="100%" alt="Grafana Dashboard" src="static/images/DockerHub.png">
+
+---
+
 # 📷 Jenkins Pipeline Screenshot
 
 <img width="100%" alt="Jenkins Pipeline" src="static/images/jenkins.png">

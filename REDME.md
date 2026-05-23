@@ -57,14 +57,11 @@ ASSIGNMENT/
 ├── static/
 │   └── images/
 │       ├── pk.png
-│       ├── project1.png
-│       ├── project2.png
-│       ├── project3.png
-│       ├── website.png
-│       ├── security_group.png
+│       ├── graphana.png
 │       ├── jenkins.png
 │       ├── promethius.png
-│       └── graphana.png
+│       ├── website.png
+│       ├── security_group.png
 │
 ├── templates/
 │   └── index.html

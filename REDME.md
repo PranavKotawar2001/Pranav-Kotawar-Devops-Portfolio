@@ -918,11 +918,6 @@ Copy the EXTERNAL-IP and open it in browser.
 
 ---
 
-# 📷 Portfolio Website Screenshot
-
-<img width="100%" alt="Portfolio Website" src="static/images/website.png">
-
----
 
 # 📊 Monitoring Features
 

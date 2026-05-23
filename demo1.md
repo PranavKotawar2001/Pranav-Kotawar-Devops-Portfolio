@@ -123,12 +123,6 @@ Allow the following inbound traffic:
 
 ---
 
-# 📷 Security Group Screenshot
-
-<img width="100%" alt="Security Group" src="security group 1.png">
-
----
-
 # 🛠️ Step 1: Install Java
 
 Jenkins requires Java to run.
@@ -207,12 +201,6 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 Copy the password and paste it into Jenkins.
 
 Install suggested plugins and create your Jenkins admin user.
-
----
-
-# 📷 Jenkins Pipeline Screenshot
-
-<img width="100%" alt="Jenkins Pipeline" src="jenkins 1.png">
 
 ---
 
@@ -533,12 +521,6 @@ sum(rate(container_network_transmit_bytes_total{namespace="default"}[5m])) by (p
 
 ---
 
-# 📷 Prometheus Dashboard Screenshot
-
-<img width="100%" alt="Prometheus Dashboard" src="promethius 1.png">
-
----
-
 # 📊 Step 13: Login to Grafana
 
 ## Access Grafana
@@ -577,20 +559,16 @@ The decoded value will be your Grafana password.
 
 ---
 
-# 📷 Grafana Dashboard Screenshot
-
-<img width="100%" alt="Grafana Dashboard" src="graphana.png">
-
----
-
 # 🐍 Step 14: Create Python Portfolio Application
 
 ## requirements.txt
 
 ```txt
-Flask
-gunicorn
-python-dotenv
+Flask==3.0.3
+python-dotenv==1.0.1
+Werkzeug==3.0.3
+Jinja2==3.1.4
+gunicorn==22.0.0
 ```
 
 ---
@@ -943,5 +921,35 @@ The implementation reflects production-oriented deployment practices using moder
 # 👨‍💻 Author
 
 ## Pranav Kotawar
+
+# 📷 Static Website WebPage
+
+<img width="100%" alt="Prometheus Dashboard" src="static/images/website.png">
+
+---
+
+# 📷 Security Group Screenshot
+
+<img width="100%" alt="Security Group" src="static/images/security_group.png">
+
+---
+
+# 📷 Jenkins Pipeline Screenshot
+
+<img width="100%" alt="Jenkins Pipeline" src="static/images/jenkins.png">
+
+---
+
+# 📷 Prometheus Dashboard Screenshot
+
+<img width="100%" alt="Prometheus Dashboard" src="static/images/promethius.png">
+
+---
+
+# 📷 Grafana Dashboard Screenshot
+
+<img width="100%" alt="Grafana Dashboard" src="static/images/graphana.png">
+
+---
 
 DevOps Engineer | Cloud Enthusiast | Kubernetes & Docker Practitioner

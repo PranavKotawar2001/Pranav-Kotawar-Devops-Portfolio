@@ -1014,4 +1014,22 @@ The implementation reflects production-oriented deployment practices using moder
 
 ---
 
+# 🎥 Project Overview Video
+
+This video provides a quick overview of the project architecture, CI/CD workflow, Kubernetes deployment process, monitoring setup, and overall implementation using Jenkins, Docker, Amazon EKS, Prometheus, and Grafana.
+
+<p align="center">
+  <a href="https://youtu.be/9A9FpvR7oF0" target="_blank">
+    <img src="https://img.shields.io/badge/Watch%20Project%20Overview-YouTube-red?style=for-the-badge&logo=youtube">
+  </a>
+</p>
+
+---
+
+# 📺 YouTube Video Link
+
+https://youtu.be/9A9FpvR7oF0
+
+---
+
 DevOps Engineer | Cloud Enthusiast | Kubernetes & Docker Practitioner
